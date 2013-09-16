@@ -1,6 +1,5 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import android.graphics.Canvas;
 
 /**Playerクラス
@@ -26,22 +25,24 @@ public abstract class AbstractPlayer extends AbstractUnit {
 	 * @param _h キャラの高さ
 	 */
 	public AbstractPlayer(final int type, float _x, float _y,float _w, float _h){
-		super(type,_x,_y,_w, _h);
-		init();//初期化へ
+		super(/*type,*/_x,_y,_w, _h);
+		//init();//初期化へ
 	}
-	
+	public AbstractPlayer(float _x, float _y,float _w, float _h){
+		super(_x,_y,_w, _h);
+		//init();//初期化へ
+	}	
 	/**初期化*/
 	public void init(){
-		status = Status.INIT;
-		currentNum++;//追加
+		status = Status.INIT;//初期化
+		currentNum++;//プレイヤーチーム増加
 		//myImage = images[type];//画像の設定
-		myImage = images2.get(CharType.ANPANMAN);
-		myImage.setVisible(false, true);//不可視
+		myImage = images2.get(myType);//画像の設定
 	}
 
 	/**準備処理*/
 	public void ready(){
-		status = Status.READY;
+		status = Status.READY;//準備
 	}
 
 	/**生存処理*/
@@ -51,14 +52,14 @@ public abstract class AbstractPlayer extends AbstractUnit {
 	
 	/**ダメージ処理*/
 	public void damage(){
-		status = Status.DAMAGE;
+		status = Status.DAMAGE;//ダメージ中
 		life--;//ライフ減
 	}
 
 	/**消滅処理*/
 	public void dead(){
 		status = Status.DEAD;//消滅
-		currentNum--;
+		currentNum--;//プレイヤーチーム減少
 	}
 
 	/** 描画

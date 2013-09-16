@@ -1,17 +1,18 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 
 /**敵キャラ　キラー*/
 public class Tsubame extends AbstractEnemy {
 
 	/** コンストラクタ */
-	public Tsubame(int type){
-		//super(キャラタイプ,x,y,w,h)		
-		super(type,0,0,50,50);
-	}
-	
+	public Tsubame(){
+		super(0,0,50,50);//super(x,y,w,h)
+		myType = CharType.TSUBAME;
+		init();
+	}	
 	@Override
 	public void start(GameView view) {
 		super.start(view);

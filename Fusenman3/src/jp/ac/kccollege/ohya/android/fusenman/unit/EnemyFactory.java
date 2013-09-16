@@ -1,6 +1,6 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.enemy.*;
 
 /**ユニット生成ファクトリー*/
@@ -16,6 +16,46 @@ public class EnemyFactory extends AbstractUnitFactory  {
 	/**参照変数　攻撃対象ユニット*/
 	private AbstractUnit target = null;
 	
+	/**現在のターン*/
+	private int turn=1;
+
+	/**敵の出現順序 */
+	private int[][] order= {
+			//{ターン, 敵タイプ, 出現数}
+			{1,3,1},
+			{2,2,3},
+			{3,111,1},
+			{3,1001,1},
+			{4,112,1},			
+			{4,2,2},
+			{4,4,1},
+			{4,5,1},
+			{4,3,2},
+			{5,2,4},
+			{5,3,2},
+			{6,115,1},
+			{6,4,2},
+			{6,2,6},
+			{7,3,1},
+			{7,4,2},
+			{7,2,3},
+			{8,5,3},
+			{8,115,1},
+			{8,2,3},
+			{9,113,1},
+			{9,1003,1},
+			{10,115,1},	
+			{10,5,3},
+			{11,4,2},
+			{12,3,6},
+			{12,2,3},
+			{13,4,4},
+			{13,6,3},
+			{14,111,1},
+			{14,1002,2},
+			{0,0,0},
+	};
+
 	/** デフォルトコンストラクタ */
 	private EnemyFactory() {
 		/* シングルトンデザインパターンの適用のため、
@@ -38,51 +78,51 @@ public class EnemyFactory extends AbstractUnitFactory  {
 	}
 	
 	/**キャラの生成*/
-	public AbstractUnit createUnit(int type) {
+	public AbstractUnit createUnit(CharType type) {
 		
-		AbstractUnit unit = null;	
+		AbstractUnit unit = null;
 		
 		switch (type) {
-		case Fusenman.KARASU:
-			unit = new Karasu(type);
+		case KARASU:
+			unit = new Karasu();
 			break;
-		case Fusenman.TSUBAME:
-			unit = new Tsubame(type);
+		case TSUBAME:
+			unit = new Tsubame();
 			break;
-		case Fusenman.KILLER:
-			unit = new Killer(type);
+		case KILLER:
+			unit = new Killer();
 			break;
-		case Fusenman.AHIRU:
-			unit = new Ahiru(type);
+		case AHIRU:
+			unit = new Ahiru();
 			break;
-		case Fusenman.ANPANMAN:
-			unit = new Anpanman(type);
+		case ANPANMAN:
+			unit = new Anpanman();
 			break;
-		case Fusenman.BOSS1:
-			unit = new StageBoss1(Fusenman.KARASU);
+		case BOSS1:
+			unit = new StageBoss1();
 			break;
-		case Fusenman.BOSS2:
-			unit = new StageBoss2(Fusenman.KILLER);
+		case BOSS2:
+			unit = new StageBoss2();
 			break;
-		case Fusenman.BOSS3:
-			unit = new StageBoss3(Fusenman.ANPANMAN);
+		case BOSS3:
+			unit = new StageBoss3();
 			break;
-		case Fusenman.SHOT_OF_ENEMY:
-			unit = new ShotOfEnemy(type);
+		case ESHOT:
+			unit = new ShotOfEnemy();
 			break;
-		case Fusenman.MESSAGE1:
+		case MESSAGE1:
 			unit = new Message("中ﾎﾞｽｷﾀ━(ﾟ∀ﾟ)━!",5,12);
 			break;
-		case Fusenman.MESSAGE2:
+		case MESSAGE2:
 			unit = new Message("EVOLVE",5,12);
 			break;
-		case Fusenman.MESSAGE3:
+		case MESSAGE3:
 			unit = new Message("アーツブートキャンプ！",5,12);
 			break;
-		case Fusenman.MESSAGE4:
+		case MESSAGE4:
 			unit = new Message("ハマフェス開催日７月２７日(土)！",8,16);
 			break;
-		case Fusenman.MESSAGE5:
+		case MESSAGE5:
 			unit = new Message("ここにメッセージを表示できるよ",12,10);
 			break;
 		default:
@@ -90,9 +130,8 @@ public class EnemyFactory extends AbstractUnitFactory  {
 		}
 		return unit;
 	}
-
 	/**キャラの生成*/
-	public AbstractUnit createUnit(int type, AbstractUnit from) {
+	public AbstractUnit createUnit(CharType type, AbstractUnit from) {
 
 		if(target != null){
 			unit = super.createUnit(type,from,target);			
@@ -108,45 +147,6 @@ public class EnemyFactory extends AbstractUnitFactory  {
 		list.add(unit);
 	}
 	
-	/**現在のターン*/
-	private int turn=1;
-	/**敵の出現順序 */
-	private int[][] order= {
-			//{ターン, 敵タイプ, 出現数}
-			{1,Fusenman.KARASU,1},
-			{2,Fusenman.TSUBAME,3},
-			{3,Fusenman.MESSAGE1,1},
-			{3,Fusenman.MESSAGE2,1},
-			{3,Fusenman.BOSS1,1},
-			{4,Fusenman.TSUBAME,2},
-			{4,Fusenman.MESSAGE3,1},
-			{4,Fusenman.MESSAGE4,1},
-			{4,Fusenman.KARASU,2},
-			{5,Fusenman.TSUBAME,4},
-			{5,Fusenman.KARASU,2},
-			{5,Fusenman.MESSAGE5,1},
-			{5,Fusenman.KILLER,2},
-			{5,Fusenman.TSUBAME,6},
-			{7,Fusenman.MESSAGE2,1},
-			{7,Fusenman.BOSS1,2},
-			{7,Fusenman.TSUBAME,3},
-			{8,Fusenman.AHIRU,3},
-			{8,Fusenman.MESSAGE5,1},
-			{8,Fusenman.TSUBAME,3},
-			{9,Fusenman.MESSAGE3,1},
-			{9,Fusenman.BOSS3,1},	
-			{10,Fusenman.AHIRU,3},
-			{11,Fusenman.KILLER,2},
-			{11,Fusenman.MESSAGE5,1},
-			{12,Fusenman.KARASU,6},
-			{12,Fusenman.TSUBAME,3},
-			{13,Fusenman.KILLER,4},
-			{13,Fusenman.ANPANMAN,3},
-			{14,Fusenman.BOSS2,2},
-			{0,0,0},
-	};
-	
-
 	/**開始*/
 	public void start(int stageCount){
 		if(AbstractEnemy.getCurrentNum() <=0){
@@ -159,6 +159,8 @@ public class EnemyFactory extends AbstractUnitFactory  {
 
 		
 	/**引数の値だけランダムに敵を生成*/
+	//////////////////////
+	/*
 	public boolean createUnits(int createNum){
 		
 		if(this ==null){//自身がnullだったら
@@ -179,6 +181,8 @@ public class EnemyFactory extends AbstractUnitFactory  {
 		}
 		return true;
 	}
+	*/
+	///////////////
 
 	/**オーダー順に敵を複数生成*/
 	public boolean createUnits(){
@@ -187,10 +191,6 @@ public class EnemyFactory extends AbstractUnitFactory  {
 	
 	/**オーダー順に敵を複数生成*/
 	private boolean createUnits(final int turn, final int[][] order){
-		
-/*		if(this ==null){//自身がnullだったら
-			return false;
-		}*/
 		
 		// 敵の生成
 		for (int i = 0; i < order.length; i++) {
@@ -203,9 +203,12 @@ public class EnemyFactory extends AbstractUnitFactory  {
 				int readNum = order[i][2];//生成数		
 				for(int j = 0; j< readNum; j++){
 					//登録済みのユニットがあるかどうか
-					unit = list.checkType(readType);
+					//unit = list.checkType(readType);
+					unit = list.checkType(toriaezu(readType));
+					
 					if(unit == null){
-						super.create(readType);
+						//super.create(readType);
+						super.create(toriaezu(readType));
 						//units.regist(unit);
 					}else{
 						unit.init();//初期化
@@ -219,4 +222,53 @@ public class EnemyFactory extends AbstractUnitFactory  {
 		}		
 		return true;
 	}
+	
+	//toriaezu
+	CharType toriaezu(int type){
+		CharType c = null;
+		
+		switch(type){
+		case 2:
+			c = CharType.TSUBAME;
+			break;
+		case 3:
+			c = CharType.KARASU;
+			break;
+		case 4:
+			c = CharType.KILLER;
+			break;
+		case 5:
+			c = CharType.AHIRU;
+			break;
+		case 6:
+			c = CharType.ANPANMAN;
+			break;
+		case 1001:
+			c = CharType.BOSS1;
+			break;
+		case 1002:
+			c = CharType.BOSS2;
+			break;
+		case 1003:
+			c = CharType.BOSS3;
+			break;
+		case 111:
+			c = CharType.MESSAGE1;
+			break;
+		case 112:
+			c = CharType.MESSAGE2;
+			break;
+		case 113:
+			c = CharType.MESSAGE3;
+			break;
+		case 114:
+			c = CharType.MESSAGE4;
+			break;
+		case 115:
+			c = CharType.MESSAGE5;
+			break;
+		}
+		return c;
+	}
+	
 }

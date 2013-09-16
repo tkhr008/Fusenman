@@ -3,27 +3,27 @@ package jp.ac.kccollege.ohya.android.fusenman.unit;
 import android.graphics.Canvas;
 import android.graphics.drawable.AnimationDrawable;
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 
 /** 画面にメッセージを表示するクラス */
 public class Item extends AbstractUnit {
 
 	// インスタンス変数
-	private float gravity=0;//重力
 	private int numberOfFrames=0;
 	AnimationDrawable  anim;
 	private int index=1;
 	
 	/**コンストラクタ*/
-	public Item(int type){
-		super(type,0,0,50,50);
-		myImage = images[type];// 画像の設定
-		anim = (AnimationDrawable)images[type];
+	public Item(){
+		super(0,0,50,50);
+		myType = CharType.ITEM1;
+		anim =(AnimationDrawable)images2.get(myType);
+		myImage=anim.getFrame(0);
 		//numberOfFrames = ((AnimationDrawable)(myImage)).getNumberOfFrames();
 		numberOfFrames = anim.getNumberOfFrames();
 		init();
-	}
-	
+	}	
 	/**初期化	 */
 	@Override
 	public void init(){
@@ -82,11 +82,9 @@ public class Item extends AbstractUnit {
 
 	}
 	protected void live() {
-		if (status == Status.DAMAGE) {
-			myImage = images[type];// 画像のリセット
-		}
 		status = Status.LIVE;
 	}
+	
 	@Override
 	public void draw(Canvas canvas) {
 		if (status == Status.DEAD || status == Status.INIT) {

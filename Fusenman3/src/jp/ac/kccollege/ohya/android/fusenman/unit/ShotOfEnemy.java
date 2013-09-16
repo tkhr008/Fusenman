@@ -1,38 +1,42 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 /**敵の弾クラス*/
 public class ShotOfEnemy extends AbstractEnemy{
 	
-	private float shotSpeed=2.0f;//弾の速度
+	private float shotSpeed=4.0f;//弾の速度
 	
 	/**コンストラクタ
-	 * @param type　キャラのタイプ
 	 * @param char_x 初期X座標
 	 * @param char_y　初期Y座標
 	 * */
-	ShotOfEnemy(int type){
-		//super(キャラタイプ,x,y,w,h)	
-		super(type,0,0,25,25);
+	ShotOfEnemy(){
+		super(0,0,25,25);//super(x,y,w,h)	
+		myType = CharType.ESHOT;
+		init();
 	}
 	
 	@Override
 	public void init(){
-		shotSpeed=2.0f;
+		//super.init();//敵弾は敵数とカウントしないため
 		status = Status.LIVE;//ステータス変更	
-		myImage = images[type];		//画像のリセット
+		myImage = images2.get(myType);//画像のリセット
 		alpha=255;
 	}
 	/**開始処理*/
 	//@Override
 	public void start(){
 		//super.start();
-		shotSpeed=3.0f;
+		//shotSpeed=3.0f;
 		status = Status.LIVE;//ステータス変更	
-		myImage = images[type];		//画像のリセット
-		alpha=255;
+		//myImage = images[type];		//画像のリセット
+		//myImage = images2.get(myType);
+		//alpha=255;
+		init();
 	}
+	
 	//インスタンスメソッド
 	/**物理状態の更新	 */
 	@Override
@@ -75,7 +79,8 @@ public class ShotOfEnemy extends AbstractEnemy{
 	/**消滅した時 */
 	@Override
 	public void dead(){
+		//super.dead();		//弾数は敵の数としてカウントしないため
 		status = Status.DEAD;
-		//弾数は敵の数としてカウントしない
+
 	}
 }

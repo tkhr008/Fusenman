@@ -28,7 +28,7 @@ public class GameScene extends AnimationScene {
 	/** ゲーム開始時刻 */
 	private long gameStarted;	
 	/** プレイ残時間 */
-	private final static long TIME = 30;
+	private final static long TIME = 300;
 	/** 残時間 */
 	private long remainedTime;
 
@@ -68,7 +68,7 @@ public class GameScene extends AnimationScene {
 		//敵の生成
 		enemyFactory.start(stageCount);
 		//item test
-		itemFactory.create(Fusenman.ITEM1);
+		itemFactory.create(CharType.ITEM1);
 	}
 
 	@Override

@@ -1,16 +1,17 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 /**敵キャラ　キラー*/
 public class Killer extends AbstractEnemy {
 
 	/** コンストラクタ */
-	public Killer(int type){
-		//super(キャラタイプ,x,y,w,h)		
-		super(type,0,0,50,30);
+	public Killer(){
+		super(0,0,50,30);//super(x,y,w,h)
+		myType = CharType.KILLER;
+		init();
 	}
-
 	@Override
 	public void init(){
 		super.init();

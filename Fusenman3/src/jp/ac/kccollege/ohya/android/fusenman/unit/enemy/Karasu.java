@@ -1,23 +1,26 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 
 /**敵キャラ　カラス*/
 public class Karasu extends AbstractEnemy{
 	
 	/**コンストラクタ*/
-	public Karasu(int type){
-		//super(キャラタイプ,x,y,w,h)
-		super(type,0,0,50,50);
-	}
-	
+	public Karasu(){
+		super(0,0,50,50);//super(x,y,w,h)
+		myType = CharType.KARASU;
+		init();
+	}	
 	/**初期化*/
 	@Override	
 	public void init(){
 		super.init();
 		hSpeed=4;//水平スピード設定
 		life=1;//ライフ設定
+
+		
 	}
 
 	/* (非 Javadoc)物理状態の更新	 */

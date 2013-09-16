@@ -1,6 +1,6 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 /**ユニット生成ファクトリー*/
 public class PlayerFactory extends AbstractUnitFactory  {
@@ -10,7 +10,7 @@ public class PlayerFactory extends AbstractUnitFactory  {
 
 	
 	/**参照変数　キャラ1体*/
-	private AbstractUnit unit = null;
+	//private AbstractUnit unit = null;
 	
 	/** デフォルトコンストラクタ */
 	private PlayerFactory() {
@@ -29,17 +29,18 @@ public class PlayerFactory extends AbstractUnitFactory  {
 	}
 
 	/**キャラの生成*/
-	public AbstractUnit createUnit(int type) {
+	public AbstractUnit createUnit(CharType type) {
 		
 		AbstractUnit unit = null;	
 		
 		switch (type) {
-		case Fusenman.SHOT_OF_PLAYER:
-			unit = new ShotOfPlayer(type);
+		case PSHOT:
+			unit = new ShotOfPlayer();
 			break;
-		case Fusenman.PLAYER:
-			unit = new MainPlayer(type);
+		case PLAYER:
+			unit = new MainPlayer();
 			break;
+			/*
 		case Fusenman.MESSAGE1:
 			unit = new Message("中ﾎﾞｽｷﾀ━(ﾟ∀ﾟ)━!",5,12);
 			break;
@@ -55,12 +56,12 @@ public class PlayerFactory extends AbstractUnitFactory  {
 		case Fusenman.MESSAGE5:
 			unit = new Message("ここにメッセージを表示できるよ",12,10);
 			break;
+			*/
 		default:
 			break;
 		}
 		return unit;
 	}
-
 	/** ユニットの登録*/
 	@Override
 	protected void registUnit(AbstractUnit unit) {

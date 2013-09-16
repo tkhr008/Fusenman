@@ -53,16 +53,6 @@ public abstract class AbstractRect extends RectF {
 	}
 
 	/**
-	 * 当たりエリアを返す
-	 * @return RectF 当たりエリア
-	 */
-/*	public RectF getArea() {
-		// 当たりエリアとキャラの位置を統一
-		//myRect.offsetTo(char_x, char_y);
-		return this;
-	}*/
-
-	/**
 	 * オブジェクトの左上座標の設定
 	 * @param x
 	 * @param y

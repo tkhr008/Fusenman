@@ -1,15 +1,17 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 
 public class Anpanman extends AbstractEnemy{
 
 	/**コンストラクタ*/
-	public Anpanman(int type){
-		super(type,0,0,65,55);
-	}
-	
+	public Anpanman(){
+		super(0,0,65,55);//super(x,y,w,h)
+		myType = CharType.ANPANMAN;
+		init();
+	}	
 	/**初期化*/
 	@Override
 	public void init(){

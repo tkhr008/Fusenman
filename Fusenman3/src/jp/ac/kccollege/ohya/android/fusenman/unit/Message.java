@@ -4,19 +4,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
 
 /** 画面にメッセージを表示するクラス */
 public class Message extends AbstractUnit {
 
 	// インスタンス変数
-	private String message;
+	private String message = null;
 	protected Paint paint;
+	
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param type
-	 *            キャラタイプ
 	 * @param _x
 	 *            左上のx座標
 	 * @param _y
@@ -27,7 +25,7 @@ public class Message extends AbstractUnit {
 	 *            文字サイズ
 	 */
 	public Message(String message, float textScaleX, float textSize) {
-		super(Fusenman.MESSAGE1,0,0, textScaleX,textSize);
+		super(0,0, textScaleX,textSize);
 		this.message=message;
 	}
 
@@ -42,10 +40,6 @@ public class Message extends AbstractUnit {
 		
 		paint.setTextSize(char_h);
 		paint.setTextScaleX(char_w);
-		//myImage = images[type];// 画像の設定
-		//myImage.setVisible(false, true);// 不可視
-
-		//alpha = 255;
 	}
 
 	/** 開始処理 */

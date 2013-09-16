@@ -1,6 +1,7 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 
 public class Ahiru extends AbstractEnemy{
@@ -8,8 +9,10 @@ public class Ahiru extends AbstractEnemy{
 	private float gravity=0;//重力
 	
 	/**コンストラクタ*/
-	public Ahiru(int type){
-		super(type,0,0,50,50);
+	public Ahiru(){
+		super(0,0,50,50);
+		myType = CharType.AHIRU;
+		init();
 	}
 	
 	/**初期化	 */

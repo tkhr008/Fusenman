@@ -1,6 +1,6 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 /**ユニット生成ファクトリー*/
 public class ItemFactory extends AbstractUnitFactory  {
@@ -25,16 +25,16 @@ public class ItemFactory extends AbstractUnitFactory  {
 	}
 
 	/**キャラの生成*/
-	public AbstractUnit createUnit(int type) {
+	public AbstractUnit createUnit(CharType type) {
 		
 		AbstractUnit unit = null;	
 		
 		switch (type) {
-		case Fusenman.ITEM1:
-			unit = new Item(type);
+		case ITEM1:
+			unit = new Item();
 			break;
-		case Fusenman.ITEM2:
-			unit = new Item(type);
+		case ITEM2:
+			unit = new Item();
 			break;
 			
 		default:
@@ -42,7 +42,6 @@ public class ItemFactory extends AbstractUnitFactory  {
 		}
 		return unit;
 	}
-
 	/** ユニットの登録*/
 	@Override
 	protected void registUnit(AbstractUnit unit) {

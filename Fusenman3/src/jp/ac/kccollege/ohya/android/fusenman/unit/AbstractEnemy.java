@@ -2,23 +2,24 @@ package jp.ac.kccollege.ohya.android.fusenman.unit;
 
 import android.graphics.Canvas;
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 /** 敵共通設定用の抽象クラス */
 public abstract class AbstractEnemy extends AbstractUnit {
 
 	// static変数
 	/** 現在の敵数 */
-	static int currentNum = 0;
+	private static int currentNum = 0;
+
+	// インスタンス変数
+	/** 弾を発射する確率 */
+	protected float chanceOfShot = 0.0f;
 
 	// staticメソッド
 	/** 現在の敵数を返す */
 	public static int getCurrentNum() {
 		return currentNum;
 	}
-
-	// インスタンス変数
-	/** 弾を発射する確率 */
-	protected float chanceOfShot = 0.0f;
 
 	/** 確率に従って攻撃のタイミングを決定する */
 	protected static boolean shotReady(float chanseOfShot) {
@@ -31,8 +32,6 @@ public abstract class AbstractEnemy extends AbstractUnit {
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param type
-	 *            キャラタイプ
 	 * @param _x
 	 *            左上のx座標
 	 * @param _y
@@ -42,16 +41,15 @@ public abstract class AbstractEnemy extends AbstractUnit {
 	 * @param _h
 	 *            キャラの高さ
 	 */
-	protected AbstractEnemy(final int type, float _x, float _y, float _w, float _h) {
-		super(type, _x, _y, _w, _h);
-		init();// 初期化へ
+	protected AbstractEnemy( float _x, float _y, float _w, float _h) {
+		super(_x, _y, _w, _h);
 	}
-
+	
 	/** 初期化 */
 	public void init() {
-		status = Status.INIT;
-		currentNum++;// 敵追加
-		myImage = images[type];// 画像の設定
+		status = Status.INIT;//初期化
+		currentNum++;// 敵チーム数増加
+		myImage = images2.get(myType);// 画像の設定
 		myImage.setVisible(false, true);// 不可視
 		size = Size.M;// サイズリセット
 		resize(size);
@@ -67,8 +65,8 @@ public abstract class AbstractEnemy extends AbstractUnit {
 		char_y = (int) (Math.random() * (bottom - char_h + top));// ランダム
 		char_x = view.getDrawRect().right;
 
-		// 出現のタイミングをずらす
-		waitTime = (int) (Math.random() * 80) * type;
+		// 出現のタイミングをずらす(縦位置の割合によって計算）
+		waitTime = (int) (Math.random() *(char_y % 5 * 100));
 		myImage.setVisible(true, true);// 可視
 
 	}
@@ -118,7 +116,7 @@ public abstract class AbstractEnemy extends AbstractUnit {
 	/** 生存処理 */
 	protected void live() {
 		if (status == Status.DAMAGE) {
-			myImage = images[type];// 画像のリセット
+			myImage = images2.get(myType);// 画像のリセット
 		}
 		status = Status.LIVE;
 	}
@@ -127,7 +125,7 @@ public abstract class AbstractEnemy extends AbstractUnit {
 	public void damage() {
 		if (status != Status.DAMAGE) {
 			status = Status.DAMAGE;
-			myImage = images[BOMBIMAGE];// 爆発画像に変更
+			myImage = images2.get(CharType.BOMB);// 爆発画像に変更
 		}
 
 		if (life-- <= 0) {// ライフが0になったとき

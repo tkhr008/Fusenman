@@ -1,6 +1,7 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 
 /**弾クラス*/
 public class ShotOfPlayer extends AbstractPlayer{
@@ -15,7 +16,12 @@ public class ShotOfPlayer extends AbstractPlayer{
 		//super(キャラタイプ,x,y,w,h)
 		super(type,0,0,50,50);
 	}	
-	
+	ShotOfPlayer(){
+		//super(キャラタイプ,x,y,w,h)
+		super(0,0,50,50);
+		myType = CharType.PSHOT;
+		init();//初期化へ
+	}		
 	//staticメソッド
 	/**スピード変更*/
 	private  static float changeSpeed(Size size){
@@ -38,6 +44,8 @@ public class ShotOfPlayer extends AbstractPlayer{
 		life=1;
 		resize(size);//サイズ変更
 		hSpeed = changeSpeed(size);//スピード変更
+		//myType = CharType.PSHOT;
+		myImage = images2.get(myType);
 	}
 	
 	/**開始処理*/

@@ -3,7 +3,6 @@ package jp.ac.kccollege.ohya.android.fusenman.unit;
 import java.util.HashMap;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
 import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -17,20 +16,12 @@ public abstract class AbstractUnit extends AbstractRect {
 	protected static enum Size {
 		SS,S, M, L,LL,XL
 	}; 
-	/**ユニットの状態*/
-	/**
-	protected static enum Status{
-		INIT,READY,START,LIVE,DAMAGE,DEAD,ATTACK
-	};
-	*/
 	/**キャライメージ配列*/
 	protected static Drawable[] images;
 	protected static HashMap<Enum<CharType>,Drawable> images2;
-	/**爆発イメージ*/
-	protected static final int BOMBIMAGE=Fusenman.BOMB;
 	
 	// インスタンス変数----------------------------------------------------------------
-	protected CharType myType;
+	protected CharType myType=null;
 	
 	/**自分自身の画像*/
 	protected Drawable myImage; 
@@ -79,12 +70,18 @@ public abstract class AbstractUnit extends AbstractRect {
 		charDef_w = _w;
 		charDef_h = _h;
 	}
-
+	AbstractUnit(float _x, float _y, float _w, float _h){
+		super(_x, _y, _w, _h);
+		charDef_w = _w;
+		charDef_h = _h;
+	}
 	//static メソッド----------------------------------------------------------------
 	/**ゲームユニットの画像を保持*/
+	/*
 	public static void setUnitImages(Drawable[] images){
 		AbstractUnit.images = images;
 	}
+	*/
 	public static void setUnitImages(HashMap<Enum<CharType>,Drawable> images){
 		AbstractUnit.images2 = images;
 	}	
@@ -105,14 +102,14 @@ public abstract class AbstractUnit extends AbstractRect {
 	protected void resize(Size newSize) {
 		if (size == newSize) {return;}//変更なし
 		
-		float value=0;
+		float value = 0;
 		switch (newSize) {	
-		case SS:			value = 0.25f;		break;		
-		case S:			value = 0.5f;			break;
-		case M:			value = 1.0f;			break;
-		case L:			value = 1.5f;			break;
-		case LL:			value = 2.0f;			break;
-		case XL:			value = 2.5f;			break;
+		case SS:	value = 0.25f;		break;		
+		case S:		value = 0.5f;		break;
+		case M:		value = 1.0f;		break;
+		case L:		value = 1.5f;		break;
+		case LL:	value = 2.0f;		break;
+		case XL:	value = 2.5f;		break;
 		}
 		//新しいサイズで矩形の値を設定
 		char_w = charDef_w * value;
@@ -124,12 +121,12 @@ public abstract class AbstractUnit extends AbstractRect {
 /*	protected float  getSize() {
 		float value=0;
 		switch (size) {	
-		case SS:			value = 0.25f;		break;		
-		case S:			value = 0.5f;			break;
-		case M:			value = 1.0f;			break;
-		case L:			value = 1.5f;			break;
-		case LL:			value = 2.0f;			break;
-		case XL:			value = 2.5f;			break;
+		case SS:	value = 0.25f;		break;		
+		case S:		value = 0.5f;		break;
+		case M:		value = 1.0f;		break;
+		case L:		value = 1.5f;		break;
+		case LL:	value = 2.0f;		break;
+		case XL:	value = 2.5f;		break;
 		}
 		return value;
 
@@ -180,27 +177,21 @@ public abstract class AbstractUnit extends AbstractRect {
 	 * @return dead 消滅フラグ
 	 */
 	public boolean isDead(){
-		/*if(status == Status.DEAD){
-			return true;
-		}
-		return false;*/
 		return status.isDead();
 	}
+	
 	/**自分自身がダメージ中かどうか
 	 * @return boolean ダメージフラグ
 	 */
 	public boolean isDamage(){
 		return status.isDamage();
-		/*if(status == Status.DAMAGE){
-
-			return true;
-		}
-		return false;*/
 	}	
+	
 	/**自分のタイプを返す*/
 	public int getType(){
 		return type;
 	}
+	
 	/**自身の状態を返す*/
 	public Status getStatus(){
 		return status;
@@ -208,7 +199,6 @@ public abstract class AbstractUnit extends AbstractRect {
 	
 	/** 攻撃処理 */
 	public void attack() {
-		//if(status == Status.LIVE){
 		if(status.isLive()){
 			status = Status.ATTACK;//攻撃
 		}
@@ -221,9 +211,14 @@ public abstract class AbstractUnit extends AbstractRect {
 		hSpeed = (float)(Math.sin(radian)*hSpeed);
 
 	}
-	/**
-	protected void lotate(int value){
-		((RotateDrawable)myImage).setLevel(value);
+	
+	/**キャラタイプの一致*/
+	public boolean equals(CharType type){
+		if(myType == null){
+			return false;
+		}else{
+			return myType.equals(type);
+		}
 	}
-	*/
+
 }

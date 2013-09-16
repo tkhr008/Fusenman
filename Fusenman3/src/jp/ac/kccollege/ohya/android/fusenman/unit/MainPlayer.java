@@ -1,33 +1,33 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
-
-
 
 /**MainPlayerクラス
  * @author Takahiro Ohya
  */
 public class MainPlayer
 	extends AbstractPlayer implements InterfaceShooter{
-
+	
 	//インスタンス変数
 	/**残機*/
-	private final int LIFE = 3;
+	private static final int LIFE = 3;
 	
 	/** コンストラクタ */
-	public MainPlayer(int type){
-		//super(キャラタイプ,x,y,w,h)
-		super(type,0, 0, 50,50);
-	}
-
+	public MainPlayer(){
+		super(0, 0, 50,50);//super(x,y,w,h)
+		myType = CharType.PLAYER;
+		init();//初期化へ
+	}	
+	//インスタンスメソッド
 	/**初期化*/
 	public void init(){
 		super.init();
 		life=LIFE;//残機のリセット
 		size= Size.M;//サイズ変更
-		//myImage = images2.get(CharType.AHIRU);
+		myImage.setVisible(false, true);//不可視
 	}
 	
 	/**準備処理(無敵時間)*/
@@ -94,7 +94,6 @@ public class MainPlayer
 	public void move(int diffX, int diffY) {
 		char_x += diffX;
 		char_y += diffY;
-		//lotate((int)char_x);
 	}
  
 	/** 加速度センサーによる移動 */
@@ -116,7 +115,7 @@ public class MainPlayer
 	
 	/**生存処理*/
 	public void live(){
-		myImage = images[type];//画像のリセット
+		myImage = images2.get(myType);//画像のリセット
 		alpha = 255;//透明度0%
 		myImage.setAlpha(alpha);//アルファ値の変更		
 		myImage.clearColorFilter();//カラーフィルタのリセット
@@ -133,14 +132,15 @@ public class MainPlayer
 	/**消滅処理*/
 	public void dead(){
 		super.dead();
-		myImage=images[BOMBIMAGE];
+		myImage=images2.get(CharType.BOMB);
 		myImage.clearColorFilter();//カラーフィルタのリセット
 	}
 	
 	/**弾発射*/
 	@Override
-	public int shoot() {
-		super.live();//生存へステータス変更
-		return 1;
+	public CharType shoot() {
+		super.live();//攻撃終了後、生存へステータス変更
+		return CharType.PSHOT;
 	}
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.Status;
 import android.graphics.Canvas;
 
@@ -35,7 +36,7 @@ public class UnitList extends ArrayList<AbstractUnit> {
 	}
 
 	/**ユニット再利用*/
-	private boolean isReuseUnit(final int type,AbstractUnit from){
+	private boolean isReuseUnit(final CharType type,AbstractUnit from){
 		AbstractUnit unit = null;
 		
 		// 消滅インスタンスがある場合復活させる
@@ -50,7 +51,6 @@ public class UnitList extends ArrayList<AbstractUnit> {
 		}
 		return false;
 	}
-	
 	/**再利用可能か確認*/
 	public AbstractUnit checkType(final int type){
 		
@@ -72,7 +72,27 @@ public class UnitList extends ArrayList<AbstractUnit> {
 		}
 		return null;
 	}
-	
+	////////////////////
+	public AbstractUnit checkType(final CharType type){
+		
+		if(isEmpty()){	return null;	}
+		
+		try{
+			// 同じタイプのオブジェクトが残っているか
+			it = iterator(); // ループ用
+			unit = null;
+			
+			while (it.hasNext() == true) {
+				unit = it.next();// 取り出し
+				if(unit.equals(type) && unit.isDead()){
+					return unit;
+				}
+			}
+		} catch (java.util.NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}	
 	/**プロセス*/
 	public void process(GameView view,UnitList vsUnitList){
 
@@ -113,7 +133,8 @@ public class UnitList extends ArrayList<AbstractUnit> {
 					
 				case ATTACK://攻撃処理
 					if(myUnit instanceof InterfaceShooter){
-						int type = ((InterfaceShooter)(myUnit)).shoot();
+						//弾キャラタイプの取得
+						CharType type =((InterfaceShooter)(myUnit)).shoot();
 						//再利用または新規生成
 						if(!isReuseUnit(type,myUnit)){
 							unitFactory.create(type, myUnit);

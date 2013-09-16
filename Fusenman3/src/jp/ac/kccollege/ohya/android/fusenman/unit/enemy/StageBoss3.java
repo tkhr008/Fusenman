@@ -1,7 +1,7 @@
 package jp.ac.kccollege.ohya.android.fusenman.unit.enemy;
 
 import jp.ac.kccollege.ohya.android.framework.game2D.GameView;
-import jp.ac.kccollege.ohya.android.fusenman.Fusenman;
+import jp.ac.kccollege.ohya.android.fusenman.Fusenman.CharType;
 import jp.ac.kccollege.ohya.android.fusenman.unit.AbstractEnemy;
 import jp.ac.kccollege.ohya.android.fusenman.unit.InterfaceShooter;
 
@@ -13,11 +13,11 @@ implements InterfaceShooter {
 	private float accel=3;
 	
 	/** コンストラクタ */
-	public StageBoss3(int type){
-		//super(キャラタイプ,x,y,w,h)	
-		super(type,0,0,200,200);
+	public StageBoss3() {
+		super(0, 0, 100, 100);// super(x,y,w,h)
+		myType = CharType.BOSS3;
+		init();
 	}
-
 	/**初期化*/
 	@Override
 	public void init(){
@@ -67,8 +67,8 @@ implements InterfaceShooter {
 	
 	/**弾発射*/
 	@Override
-	public int shoot() {
+	public CharType shoot() {
 		live();
-		return Fusenman.SHOT_OF_ENEMY ;
+		return CharType.ESHOT;
 	}
 }
